@@ -16,8 +16,6 @@
  */
 package org.jboss.as.quickstarts.wicketEar.war;
 
-import static net.ftlines.wicket.cdi.ConversationPropagation.NONE;
-
 import javax.enterprise.inject.spi.BeanManager;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -27,7 +25,9 @@ import net.ftlines.wicket.cdi.CdiConfiguration;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.jboss.as.quickstarts.wicketEar.war.pages.InsertContact;
-import org.jboss.as.quickstarts.wicketEar.war.pages.ListContacts;
+import org.jboss.as.quickstarts.wicketEar.war.pages.ListCustomers;
+
+import static net.ftlines.wicket.cdi.ConversationPropagation.*;
 
 /**
  * 
@@ -35,28 +35,30 @@ import org.jboss.as.quickstarts.wicketEar.war.pages.ListContacts;
  */
 public class WicketJavaEEApplication extends WebApplication {
 
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return ListContacts.class;
-    }
+	@Override
+	public Class<? extends Page> getHomePage() {
+		return ListCustomers.class;
+	}
 
-    @Override
-    protected void init() {
-        super.init();
+	@Override
+	protected void init() {
+		super.init();
 
-        // Enable CDI
-        BeanManager bm;
-        try {
-            bm = (BeanManager) new InitialContext().lookup("java:comp/BeanManager");
-        } catch (NamingException e) {
-            throw new IllegalStateException("Unable to obtain CDI BeanManager", e);
-        }
+		// Enable CDI
+		BeanManager bm;
+		try {
+			bm = (BeanManager) new InitialContext()
+					.lookup("java:comp/BeanManager");
+		} catch (NamingException e) {
+			throw new IllegalStateException("Unable to obtain CDI BeanManager",
+					e);
+		}
 
-        // Configure CDI, disabling Conversations as we aren't using them
-        new CdiConfiguration(bm).setPropagation(NONE).configure(this);
+		// Configure CDI, disabling Conversations as we aren't using them
+		new CdiConfiguration(bm).setPropagation(NONE).configure(this);
 
-        // Mount the InsertContact page at /insert
-        mountPage("/insert", InsertContact.class);
-    }
+		// Mount the InsertContact page at /insert
+		mountPage("/insert", InsertContact.class);
+	}
 
 }
