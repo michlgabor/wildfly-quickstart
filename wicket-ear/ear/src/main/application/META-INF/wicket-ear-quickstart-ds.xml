@@ -32,6 +32,15 @@
             <user-name>sa</user-name>
             <password>sa</password>
         </security>
+<!-- 		<connection-url>jdbc:mysql://localhost:3306</connection-url> -->
+<!--         <driver>mysql</driver> -->
+<!--         <security> -->
+<!--             <user-name>root</user-name> -->
+<!--             <password>qwer1234</password> -->
+<!--         </security> -->
+        
     </datasource>
+    
+    
 </datasources>
  
